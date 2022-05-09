@@ -1,0 +1,72 @@
+.navbar {
+    display: flex;
+    /* border: 3px solid red; */
+    width: auto;
+    height: 50px;
+    background-color: rgb(88, 87, 87);
+}
+
+.navbar a {
+    display: flex;
+    align-items: center;
+    background-color: rgb(104, 104, 104);
+    padding: 0 20px;
+    transition: 0.2s ease-in-out;
+}
+
+.navbar a:hover {
+    background-color: rgb(113, 113, 113);
+}
+
+.navbar h1 {
+    border: 3px solid red;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    margin: 0;
+    animation: flashing 0.7s ease-in alternate infinite;
+}
+
+@keyframes flashing {
+    from {
+      color: red;
+    }
+  
+    to {
+      color: yellow;
+    }
+  }
+
+
+.board {
+    display: flex;
+    border: 3px solid red;
+    justify-content: center;
+
+}
+
+.lane {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100px;
+  height: 600px;
+  background-color: rgb(33, 62, 165);
+
+}
+
+.checker {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: rgb(21, 32, 79);
+}
+
+.red {
+  background-color: red;
+}
+
+.yellow {
+  background-color: yellow;
+}
