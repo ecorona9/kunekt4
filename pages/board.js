@@ -116,11 +116,14 @@ export default function Board() {
 
   return (
       <>
-        <button onClick={() => resetBoard()}> RESET </button>
-        {gameOver && <h1> Game Over Last Player Moved: {turn}</h1>}
-        {!gameOver && <h1>Game Started</h1>}
-        {turn === 1 && gameOver && <h1>Red Wins!</h1>}
-        {turn === -1 && gameOver && <h1>Yellow Wins!</h1>}
+        <div className="gameState">
+            <button onClick={() => resetBoard()}> RESET </button>
+            {gameOver && <h1> Game Over Last Player Moved: {turn}</h1>}
+            {!gameOver && <h1>Game Started</h1>}
+            {turn === 1 && gameOver && <h1>Red Wins!</h1>}
+            {turn === -1 && gameOver && <h1>Yellow Wins!</h1>}
+        </div>
+        
         <div className="board">
             {board.map((lane, index) => (
                 <div className="lane" onClick={() => handleClick(lane, index)}>
