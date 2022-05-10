@@ -1,6 +1,5 @@
 import { useState } from "react";
-
-
+import 'animate.css'
 
 export default function Board() {
 
@@ -118,10 +117,10 @@ export default function Board() {
       <>
         <div className="gameState">
             <button onClick={() => resetBoard()}> RESET </button>
-            {gameOver && <h1> Game Over Last Player Moved: {turn}</h1>}
+            {gameOver && <h1> Game Over</h1>}
             {!gameOver && <h1>Game Started</h1>}
-            {turn === 1 && gameOver && <h1>Red Wins!</h1>}
-            {turn === -1 && gameOver && <h1>Yellow Wins!</h1>}
+            {turn === 1 && gameOver && <h1 className="color: red">Red Wins!</h1>}
+            {turn === -1 && gameOver && <h1 className="color: yellow">Yellow Wins!</h1>}
         </div>
         
         <div className="board">
@@ -131,8 +130,12 @@ export default function Board() {
                     {lane.map((checker) => (
                         <>
                             {checker === 0 && <div className="checker"/>}
-                            {checker === 1 && <div className="checker red"/>}
-                            {checker === -1 && <div className="checker yellow"/>}
+                            {checker === 1 && <div className="checker">
+                                    <div className="checker red animate__animated animate__backInDown animate__faster"></div>
+                                </div>}
+                            {checker === -1 && <div className="checker">
+                                    <div className="checker yellow animate__animated animate__backInDown animate__faster"></div>
+                                </div>}
                         </>
                     ))}
                 </div>

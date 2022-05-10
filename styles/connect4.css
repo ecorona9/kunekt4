@@ -71,10 +71,21 @@
 
 .red {
   background-color: red;
+  position: relative;
 }
 
 .yellow {
   background-color: yellow;
+  position: relative;
+}
+
+.checkerShadow {
+  position: absolute;
+  z-index: -1;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: rgb(21, 32, 79);
 }
 
 .gameState {
