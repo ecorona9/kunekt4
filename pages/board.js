@@ -19,14 +19,20 @@ export default function Board() {
     var handleClick = (lane, i) => {
         if(gameOver)
             return;
-
         var copy = [...board];
         var index = copy[i].lastIndexOf(0);
         if(index >= 0)
             copy[i][index] = turn;
+        else
+            return;
         setBoard(copy);
+        
+        // if game can end stop
+        if(updateGameState(turn))
+            return;
+        
         setTurn(turn => turn * -1);
-        console.log(lane);
+        console.log(board);
         console.log('turn:', turn)
     }
 
@@ -38,6 +44,72 @@ export default function Board() {
             [0,0,0,0,0,0],
             [0,0,0,0,0,0],
             [0,0,0,0,0,0]]);
+        setTurn(1);
+        setGameOver(false);
+    }
+
+    var updateGameState = (player) => {
+        // Check if board has been filled
+        var foundZero = false;
+        for(var i = 0; i < board.length; i++) {
+            var lane = board[i];
+            for(var j = 0; j < lane.length; j++) {
+                if(lane[j] == 0)
+                    foundZero = true;
+            }
+        }
+        if(!foundZero)
+        {
+            setGameOver(true);
+            return true;
+        }
+            
+            
+
+        // Check if anyone has won
+        // vertical 
+        for (var j = 0; j<board.length-3 ; j++ ){
+            for (var i = 0; i< board[j].length; i++){
+                if (board[i][j] == player && board[i][j+1] == player && board[i][j+2] == player && board[i][j+3] == player){
+                    setGameOver(true);
+                    console.log("vertical winner: ", turn);
+                    return true;
+                }           
+            }
+        }
+        // horizontal
+        for (var i = 0; i<board.length-3 ; i++ ){
+            for (var j = 0; j<board[i].length; j++){
+                if (board[i][j] == player && board[i+1][j] == player && board[i+2][j] == player && board[i+3][j] == player){
+                    setGameOver(true);
+                    console.log("horizontal winner: ", turn);
+                    return true;
+                }           
+            }
+        }
+        // ascending 
+        for (var i=3; i<board.length; i++){
+            var lane = board[i];
+            for (var j=0; j<lane.length-3; j++){
+                if (board[i][j] == player && board[i-1][j+1] == player && board[i-2][j+2] == player && board[i-3][j+3] == player) {
+                    console.log('ascending winner: ', turn)
+                    setGameOver(true);
+                    return true;
+                }
+            }
+        }
+        // descending
+        for (var i=3; i<board.length; i++){
+            var lane = board[i];
+            for (var j=3; j<lane.length; j++){
+                if (board[i][j] == player && board[i-1][j-1] == player && board[i-2][j-2] == player && board[i-3][j-3] == player) {
+                    console.log('descending winner: ', turn)
+                    setGameOver(true);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     
     
@@ -45,6 +117,10 @@ export default function Board() {
   return (
       <>
         <button onClick={() => resetBoard()}> RESET </button>
+        {gameOver && <h1> Game Over Last Player Moved: {turn}</h1>}
+        {!gameOver && <h1>Game Started</h1>}
+        {turn === 1 && gameOver && <h1>Red Wins!</h1>}
+        {turn === -1 && gameOver && <h1>Yellow Wins!</h1>}
         <div className="board">
             {board.map((lane, index) => (
                 <div className="lane" onClick={() => handleClick(lane, index)}>
