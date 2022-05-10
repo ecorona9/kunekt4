@@ -14,8 +14,40 @@ export default function Board() {
     
     const [turn, setTurn] = useState(1);
     const [gameOver, setGameOver] = useState(false);
+    const [mode, setMode] = useState(0);
 
     var handleClick = (lane, i) => {
+        if(gameOver)
+            return;
+        var copy = [...board];
+        var index = copy[i].lastIndexOf(0);
+        if(index >= 0)
+            copy[i][index] = turn;
+        else
+            return;
+        setBoard(copy);
+        
+        // if game can end stop
+        if(updateGameState(turn))
+            return;
+        
+        setTurn(turn => turn * -1);
+
+        console.log('current mode: ', mode);
+        if(mode === 1)
+        {
+            console.log('random clicking');
+            randomClick();
+
+        }
+            
+
+        console.log(board);
+        console.log('turn:', turn)
+    }
+
+    var randomClick = () => {
+        var i = Math.floor(Math.random() * 7);
         if(gameOver)
             return;
         var copy = [...board];
@@ -34,6 +66,8 @@ export default function Board() {
         console.log(board);
         console.log('turn:', turn)
     }
+
+    
 
     var resetBoard = (lane, i) => {
         setBoard([[0,0,0,0,0,0],
@@ -109,18 +143,16 @@ export default function Board() {
             }
         }
         return false;
-    }
-    
-    
+    }    
 
   return (
       <>
         <div className="gameState">
             <button onClick={() => resetBoard()}> RESET </button>
-            <div onChange={(e) => console.log(e.target.value)}>
-                <input type="radio" value="player" name="mode" /> Player
-                <input type="radio" value="random" name="mode" /> Random
-                <input type="radio" value="minimax" name="mode" /> Minimax
+            <div onChange={(e) => setMode(e.target.value)}>
+                <input type="radio" value={0} name="mode" /> Player
+                <input type="radio" value={1} name="mode" /> Random
+                <input type="radio" value={2} name="mode" /> Minimax
             </div>
             {gameOver && <h1> Game Over</h1>}
             {!gameOver && <h1>Game Started</h1>}
