@@ -117,6 +117,11 @@ export default function Board() {
       <>
         <div className="gameState">
             <button onClick={() => resetBoard()}> RESET </button>
+            <div onChange={(e) => console.log(e.target.value)}>
+                <input type="radio" value="player" name="mode" /> Player
+                <input type="radio" value="random" name="mode" /> Random
+                <input type="radio" value="minimax" name="mode" /> Minimax
+            </div>
             {gameOver && <h1> Game Over</h1>}
             {!gameOver && <h1>Game Started</h1>}
             {turn === 1 && gameOver && <h1 className="color: red">Red Wins!</h1>}
