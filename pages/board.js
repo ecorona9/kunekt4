@@ -30,30 +30,41 @@ export default function Board() {
         // if game can end stop
         if(updateGameState(turn))
             return;
-        
-        setTurn(turn => turn * -1);
 
         console.log('current mode: ', mode);
-        if(mode === 1)
+        if(turn == 1)
+            setTurn(-1);
+        else
+            setTurn(1);
+        if(mode == 1)
         {
             console.log('random clicking');
-            randomClick();
+            setTimeout(() => { randomClick(); }, 5000);
+            
+            if(turn == 1)
+                setTurn(-1);
+            else
+                setTurn(1);
 
         }
             
 
-        console.log(board);
+        // console.log(board);
         console.log('turn:', turn)
     }
 
     var randomClick = () => {
+        var copy = [...board];
         var i = Math.floor(Math.random() * 7);
+        while(copy[i].lastIndexOf(0) < 0) {
+            i = Math.floor(Math.random() * 7);
+        }
         if(gameOver)
             return;
-        var copy = [...board];
+        
         var index = copy[i].lastIndexOf(0);
         if(index >= 0)
-            copy[i][index] = turn;
+            copy[i][index] = turn * -1;
         else
             return;
         setBoard(copy);
@@ -61,10 +72,8 @@ export default function Board() {
         // if game can end stop
         if(updateGameState(turn))
             return;
-        
-        setTurn(turn => turn * -1);
-        console.log(board);
-        console.log('turn:', turn)
+        // console.log(board);
+        // console.log('turn:', turn)
     }
 
     
@@ -77,7 +86,7 @@ export default function Board() {
             [0,0,0,0,0,0],
             [0,0,0,0,0,0],
             [0,0,0,0,0,0]]);
-        setTurn(1);
+        turn = 1;
         setGameOver(false);
     }
 
